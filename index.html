@@ -212,16 +212,17 @@
             transform: scale(1.3);
             box-shadow: 0 0 15px rgba(99, 102, 241, 0.7);
         }
-        
+                
         .moment-card {
             background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
             max-width: 500px;
+            min-height: 420px; 
             z-index: 1000;
             border: none;
         }
-        
+
         .moment-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
@@ -381,6 +382,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: flex-end;
+            gap: 1rem;
         }
         
         .location-chip {
@@ -428,7 +430,6 @@
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
-            margin-bottom: 1rem;
         }
         
         .map-control-button {
@@ -534,6 +535,92 @@
             gap: 8px;
             border: none;
         }
+
+        /* Dark mode styles */
+        .dark {
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+
+        .light {
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+
+        .dark .map-control-button {
+            background: rgba(30, 41, 59, 0.8);
+            color: white;
+        }
+
+        .light .map-control-button {
+            background: rgba(226, 232, 240, 0.8);
+            color: #0f172a;
+        }
+
+        .dark .moment-card {
+            background: rgba(15, 23, 42, 0.95);
+        }
+
+        .light .moment-card {
+            background: rgba(248, 250, 252, 0.95);
+        }
+
+        .dark .moment-popup {
+            background: rgba(15, 23, 42, 0.95);
+        }
+
+        .light .moment-popup {
+            background: rgba(248, 250, 252, 0.95);
+        }
+
+        .dark .reply-input {
+            background: rgba(30, 41, 59, 0.8);
+            color: white;
+        }
+
+        .light .reply-input {
+            background: rgba(226, 232, 240, 0.8);
+            color: #0f172a;
+        }
+
+        .share-moment-button {
+            width: 100%;
+            padding: 12px 24px; 
+            font-size: 1rem;
+            background-image: linear-gradient(to right, #2563eb, #7c3aed); 
+            color: #fff;
+            border-radius: 0.5rem;
+            font-weight: 500; 
+            border: none;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+            outline: none;
+        }
+
+        .share-moment-button:hover {
+            background-image: linear-gradient(to right, #3b82f6, #9333ea); 
+        }
+
+        .share-moment-button:focus {
+            box-shadow: 0 0 0 2px #3b82f6, 0 0 0 4px #1e293b; 
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body class="min-h-full">
@@ -566,8 +653,8 @@
                 <i class="fas fa-location-arrow"></i>
             </button>
         </div>
-        <button id="toggle-form" class="map-control-button bg-blue-600 hover:bg-blue-500" title="Share Moment">
-            <i class="fas fa-plus"></i>
+        <button id="toggle-form" class="map-control-button bg-blue-600 hover:bg-blue-500 w-12 h-12 flex items-center justify-center" title="Share Moment">
+            <i class="fas fa-plus text-lg"></i>
         </button>
     </div>
     
@@ -608,7 +695,7 @@
                             placeholder="Where are you? (city or place)" 
                             class="w-full px-4 py-3 text-base bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
-                        <div id="detected-location" class="text-sm text-gray-400 absolute -bottom-6 left-0 hidden">
+                        <div id="detected-location" class="text-sm text-gray-400 mt-1">
                             <span>Detected: </span>
                             <span id="detected-location-text"></span>
                             <button id="use-detected-location" class="text-blue-400 ml-1 hover:underline">Use</button>
@@ -666,12 +753,9 @@
                         </div>
                     </div>
                 </div>
-                
-                <button 
-                    type="submit" 
-                    class="w-full py-3 px-6 text-base bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-lg font-medium transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800 pulse"
-                >
-                    <i class="fas fa-paper-plane mr-2"></i>Share Moment
+                                
+                <button type="submit" class="share-moment-button">
+                    <i class="fas fa-paper-plane" style="margin-right: 0.5rem;"></i>Share Moment
                 </button>
             </form>
         </div>
@@ -679,6 +763,20 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
+        const lightTile =  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+            attribution: '',
+            subdomains: 'abcd',
+            maxZoom: 19
+        });
+
+        const darkTile = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '',
+            subdomains: 'abcd',
+            maxZoom: 19,
+            noWrap: true
+        });
+
+        let isDarkMode = true;
         const momentForm = document.getElementById('moment-form');
         const messageInput = document.getElementById('message');
         const locationInput = document.getElementById('location');
@@ -754,33 +852,38 @@
         }
         
         function initMap() {
+            // Initialize the map with constraints
             map = L.map('map', {
                 zoomControl: false,
                 doubleClickZoom: false,
-                closePopupOnClick: false
+                closePopupOnClick: false,
+                minZoom: 2,
+                maxZoom: 18,
+                maxBounds: [
+                    [-85, -180],
+                    [85, 180]
+                ],
+                maxBoundsViscosity: 1.0,
+                worldCopyJump: false,
+                layers: [darkTile] // Start with dark theme
             }).setView([0, 0], 2);
-            
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-                attribution: '',
-                maxZoom: 19,
-                subdomains: 'abcd'
-            }).addTo(map);
-            
+
+            // Geolocation logic
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         const offsetLat = (Math.random() * 0.02) - 0.01;
                         const offsetLng = (Math.random() * 0.02) - 0.01;
-                        
+
                         userGeoLocation = {
                             lat: position.coords.latitude + offsetLat,
                             lng: position.coords.longitude + offsetLng
                         };
-                        
+
                         if (userMarker) {
                             map.removeLayer(userMarker);
                         }
-                        
+
                         userMarker = L.marker([userGeoLocation.lat, userGeoLocation.lng], {
                             icon: L.divIcon({
                                 className: 'user-location',
@@ -788,9 +891,9 @@
                                 iconSize: [24, 24]
                             })
                         }).addTo(map);
-                        
+
                         map.setView([userGeoLocation.lat, userGeoLocation.lng], 13);
-                        
+
                         getLocationName(position.coords.latitude, position.coords.longitude).then(name => {
                             if (name && detectedLocationText && detectedLocationDiv) {
                                 detectedLocationText.textContent = name;
@@ -807,7 +910,7 @@
             } else {
                 getUserLocation();
             }
-            
+
             map.on('click', () => {
                 map.closePopup();
             });
@@ -1176,8 +1279,8 @@
         });
         
         emojiPicker.addEventListener('click', (e) => {
-            if (e.target.classList.contains('emoji-option')) {
-                const emoji = e.target.getAttribute('data-emoji');
+            if (e.target.classList.contains('emoji-option') || e.target.parentElement.classList.contains('emoji-option')) {
+                const emoji = e.target.getAttribute('data-emoji') || e.target.parentElement.getAttribute('data-emoji');
                 document.getElementById('selected-mood').textContent = emoji;
                 emojiPicker.classList.remove('show');
             }
@@ -1427,17 +1530,22 @@
         }
         
         themeToggle.addEventListener('click', () => {
-            const isDark = document.documentElement.classList.contains('dark');
-            
-            if (isDark) {
+            if (isDarkMode) {
+                map.removeLayer(darkTile);
+                lightTile.addTo(map);
                 document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light');
                 themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
                 showToast('Light mode activated');
             } else {
+                map.removeLayer(lightTile);
+                darkTile.addTo(map);
+                document.documentElement.classList.remove('light');
                 document.documentElement.classList.add('dark');
                 themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
                 showToast('Dark mode activated');
             }
+            isDarkMode = !isDarkMode;
         });
         
         function generateDemoMoments() {
