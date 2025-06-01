@@ -176,6 +176,14 @@
             display: none;
         }
         
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        
         body {
             font-family: 'Inter', sans-serif;
             color: var(--text-light);
@@ -183,6 +191,8 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
         
         #map {
@@ -192,6 +202,9 @@
             right: 0;
             bottom: 0;
             z-index: 1;
+            width: 100vw;
+            height: 100vh;
+            flex: 1;
         }
         
         .moment-marker {
@@ -623,7 +636,7 @@
         }
     </style>
 </head>
-<body class="min-h-full">
+<body class="min-h-full overflow-hidden">
     <div id="map"></div>
     
     <div class="overlay top-overlay">
@@ -766,16 +779,17 @@
         const lightTile =  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
             attribution: '',
             subdomains: 'abcd',
-            maxZoom: 19
+            maxZoom: 19,
+            noWrap: false
         });
 
         const darkTile = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
             attribution: '',
             subdomains: 'abcd',
             maxZoom: 19,
-            noWrap: true
+            noWrap: false
         });
-
+        
         let isDarkMode = true;
         const momentForm = document.getElementById('moment-form');
         const messageInput = document.getElementById('message');
@@ -857,17 +871,35 @@
                 zoomControl: false,
                 doubleClickZoom: false,
                 closePopupOnClick: false,
-                minZoom: 2,
+                minZoom: 3, // Increase the minimum zoom level to prevent white borders
                 maxZoom: 18,
                 maxBounds: [
-                    [-85, -180],
-                    [85, 180]
+                    [-90, -180],
+                    [90, 180]
                 ],
                 maxBoundsViscosity: 1.0,
-                worldCopyJump: false,
+                worldCopyJump: true,
                 layers: [darkTile] // Start with dark theme
-            }).setView([0, 0], 2);
+            }).setView([0, 0], 3); // Also start at a higher zoom level
 
+            // Make sure the map fills the viewport
+            function updateMapSize() {
+                map.invalidateSize();
+            }
+            
+            // Call on init and when window resizes
+            updateMapSize();
+            window.addEventListener('resize', updateMapSize);
+
+            // Ensure map tiles fully cover the viewport
+            map.on('resize', function() {
+                map.setView(map.getCenter());
+            });
+
+            // Add event listeners for viewport changes
+            document.addEventListener('visibilitychange', updateMapSize);
+            window.addEventListener('orientationchange', updateMapSize);
+            
             // Geolocation logic
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
