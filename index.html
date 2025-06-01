@@ -634,10 +634,245 @@
                 opacity: 1;
             }
         }
+        
+        .feed-panel {
+            position: absolute;
+            top: 64px;
+            left: 0;
+            bottom: 0;
+            width: 350px;
+            background: rgba(15, 23, 42, 0.97);
+            backdrop-filter: blur(15px);
+            z-index: 50;
+            padding: 1.25rem;
+            overflow-y: auto;
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            margin-top: 20px; /* Add space for the header text */
+        }
+
+        .feed-panel.active {
+            transform: translateX(0);
+        }
+
+        .feed-item {
+            background: rgba(30, 41, 59, 0.8);
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .feed-item:hover {
+            background: rgba(30, 41, 59, 0.95);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .feed-toggle {
+            position: absolute;
+            top: 80px;
+            right: 20px;
+            z-index: 60;
+            width: 46px;
+            height: 46px;
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 3px 12px rgba(79, 70, 229, 0.4);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .feed-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.6);
+        }
+
+        .feed-panel::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .feed-panel::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+        }
+
+        .feed-panel::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.5);
+            border-radius: 10px;
+        }
+
+        /* Ensure app title and tagline stay above feed panel */
+        .overlay.top-overlay {
+            z-index: 55; /* Higher than feed-panel */
+        }
+
+        .dark {
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+
+        .light {
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+
+        .dark .map-control-button {
+            background: rgba(30, 41, 59, 0.8);
+            color: white;
+        }
+
+        .light .map-control-button {
+            background: rgba(226, 232, 240, 0.8);
+            color: #0f172a;
+        }
+
+        .dark .moment-card {
+            background: rgba(15, 23, 42, 0.95);
+        }
+
+        .light .moment-card {
+            background: rgba(248, 250, 252, 0.95);
+        }
+
+        .dark .moment-popup {
+            background: rgba(15, 23, 42, 0.95);
+        }
+
+        .light .moment-popup {
+            background: rgba(248, 250, 252, 0.95);
+        }
+
+        .dark .reply-input {
+            background: rgba(30, 41, 59, 0.8);
+            color: white;
+        }
+
+        .light .reply-input {
+            background: rgba(226, 232, 240, 0.8);
+            color: #0f172a;
+        }
+
+        .share-moment-button {
+            width: 100%;
+            padding: 12px 24px; 
+            font-size: 1rem;
+            background-image: linear-gradient(to right, #2563eb, #7c3aed); 
+            color: #fff;
+            border-radius: 0.5rem;
+            font-weight: 500; 
+            border: none;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+            outline: none;
+        }
+
+        .share-moment-button:hover {
+            background-image: linear-gradient(to right, #3b82f6, #9333ea); 
+        }
+
+        .share-moment-button:focus {
+            box-shadow: 0 0 0 2px #3b82f6, 0 0 0 4px #1e293b; 
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .feed-panel {
+            position: absolute;
+            top: 64px;
+            left: 0;
+            bottom: 0;
+            width: 350px;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 50;
+            padding: 1rem;
+            overflow-y: auto;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feed-panel.active {
+            transform: translateX(0);
+        }
+        
+        .feed-item {
+            background: rgba(30, 41, 59, 0.7);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .feed-item:hover {
+            background: rgba(30, 41, 59, 0.9);
+            transform: translateY(-2px);
+        }
+        
+        .feed-toggle {
+            position: absolute;
+            top: 80px;
+            right: 20px;
+            z-index: 60;
+            width: 40px;
+            height: 40px;
+            background: rgba(99, 102, 241, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .feed-panel {
+            left: 0; 
+            transform: translateX(-100%);
+        }
     </style>
 </head>
 <body class="min-h-full overflow-hidden">
-    <div id="map"></div>
+    <div id="map" class="map-container"></div>
+    
+    <div class="feed-panel" id="feed-panel">
+        <h2 class="text-xl font-bold mb-4">Recent Moments</h2>
+        <div class="feed-items" id="feed-items">
+            <!-- Feed items will be added here dynamically -->
+        </div>
+    </div>
+    
+    <div class="feed-toggle" id="feed-toggle" title="Toggle Feed">
+        <i class="fas fa-list"></i>
+    </div>
     
     <div class="overlay top-overlay">
         <div>
@@ -679,7 +914,7 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <form id="moment-form" class="space-y-4">
+            <form id="moment-form" class="space-y-4" novalidate>
                 <div>
                     <textarea 
                         id="message" 
@@ -689,6 +924,7 @@
                         maxlength="280"
                         required
                     ></textarea>
+                    <div id="message-error" class="text-red-500 text-sm mt-1 hidden">Please share what's happening right now</div>
                     <div class="flex justify-between items-center mt-2">
                         <div class="text-sm text-gray-400">
                             <span id="char-count">0</span>/280
@@ -707,7 +943,9 @@
                             id="location" 
                             placeholder="Where are you? (city or place)" 
                             class="w-full px-4 py-3 text-base bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required
                         >
+                        <div id="location-error" class="text-red-500 text-sm mt-1 hidden">Please enter your location</div>
                         <div id="detected-location" class="text-sm text-gray-400 mt-1">
                             <span>Detected: </span>
                             <span id="detected-location-text"></span>
@@ -774,6 +1012,56 @@
         </div>
     </div>
 
+    <script>
+        // Add validation for the form
+        document.getElementById('moment-form').addEventListener('submit', function(e) {
+            let isValid = true;
+            const messageInput = document.getElementById('message');
+            const locationInput = document.getElementById('location');
+            const messageError = document.getElementById('message-error');
+            const locationError = document.getElementById('location-error');
+            
+            // Validate message
+            if (!messageInput.value.trim()) {
+                messageError.classList.remove('hidden');
+                messageInput.classList.add('border', 'border-red-500');
+                isValid = false;
+            } else {
+                messageError.classList.add('hidden');
+                messageInput.classList.remove('border', 'border-red-500');
+            }
+            
+            // Validate location
+            if (!locationInput.value.trim()) {
+                locationError.classList.remove('hidden');
+                locationInput.classList.add('border', 'border-red-500');
+                isValid = false;
+            } else {
+                locationError.classList.add('hidden');
+                locationInput.classList.remove('border', 'border-red-500');
+            }
+            
+            if (!isValid) {
+                e.preventDefault();
+            }
+        });
+        
+        // Clear errors when inputs change
+        document.getElementById('message').addEventListener('input', function() {
+            if (this.value.trim()) {
+                document.getElementById('message-error').classList.add('hidden');
+                this.classList.remove('border', 'border-red-500');
+            }
+        });
+        
+        document.getElementById('location').addEventListener('input', function() {
+            if (this.value.trim()) {
+                document.getElementById('location-error').classList.add('hidden');
+                this.classList.remove('border', 'border-red-500');
+            }
+        });
+    </script>
+
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         const lightTile =  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
@@ -808,6 +1096,10 @@
         const zoomInButton = document.getElementById('zoom-in');
         const zoomOutButton = document.getElementById('zoom-out');
         const locateMeButton = document.getElementById('locate-me');
+        const feedPanel = document.getElementById('feed-panel');
+        const feedToggle = document.getElementById('feed-toggle');
+        const feedItems = document.getElementById('feed-items');
+        const mapContainer = document.getElementById('map');
         
         let moments = [];
         let map;
@@ -818,6 +1110,9 @@
         let userLocation = null;
         let userGeoLocation = null;
         let isFormOpen = false;
+        let isFeedOpen = false;
+        // Track user reactions
+        let userReactions = JSON.parse(localStorage.getItem('userReactions') || '{}');
         
         function initFirebase() {
             if (!window.firebaseApp) {
@@ -1048,7 +1343,7 @@
                         <div class="flex justify-between items-center">
                             <div class="flex flex-wrap gap-1">
                                 ${Object.entries(moment.reactions || {}).map(([emoji, count]) => `
-                                    <button class="reaction-bubble moment-react" data-moment-id="${moment.id}" data-reaction="${emoji}">
+                                    <button class="reaction-bubble moment-react ${userReactions[moment.id]?.includes(emoji) ? 'bg-blue-700' : ''}" data-moment-id="${moment.id}" data-reaction="${emoji}">
                                         ${emoji} ${count}
                                     </button>
                                 `).join('')}
@@ -1071,14 +1366,14 @@
                             <div class="replies-container" id="replies-${moment.id}">
                                 ${moment.replies ? moment.replies.map(reply => `
                                     <div class="reply">
-                        <div class="flex items-center justify-between">
-                            <span class="font-medium">${reply.userId}</span>
-                            <span class="text-gray-400 text-xs">${getTimeAgo(reply.timestamp)}</span>
-                        </div>
-                        <div>${reply.message}</div>
-                        </div>
-                        `).join('') : ''}
-                    </div>
+                                        <div class="flex items-center justify-between">
+                                            <span class="font-medium">${reply.userId}</span>
+                                            <span class="text-gray-400 text-xs">${getTimeAgo(reply.timestamp)}</span>
+                                        </div>
+                                        <div>${reply.message}</div>
+                                    </div>
+                                `).join('') : ''}
+                            </div>
                             <div class="reply-form">
                                 <input type="text" class="reply-input" placeholder="Add a reply..." data-moment-id="${moment.id}">
                                 <button class="reply-button" data-moment-id="${moment.id}">Reply</button>
@@ -1088,11 +1383,14 @@
                     
                     marker.bindPopup(popupContent, {
                         maxWidth: 350,
-                        className: 'moment-popup-container'
+                        className: 'moment-popup-container',
+                        autoClose: false, // Prevent auto-closing
+                        closeOnClick: false // Don't close when clicking elsewhere on the map
                     });
                     
                     popupContent.querySelectorAll('.hidden-message').forEach(el => {
-                        el.addEventListener('click', () => {
+                        el.addEventListener('click', (e) => {
+                            e.stopPropagation(); // Prevent event propagation
                             const momentId = el.closest('[data-moment-id]')?.getAttribute('data-moment-id') || 
                                             el.closest('.moment-popup')?.querySelector('[data-moment-id]')?.getAttribute('data-moment-id');
                             
@@ -1120,8 +1418,25 @@
                             const momentId = button.getAttribute('data-moment-id');
                             const reaction = button.getAttribute('data-reaction');
                             
+                            // Check if user has already used this reaction for this moment
+                            if (!userReactions[momentId]) {
+                                userReactions[momentId] = [];
+                            }
+                            
+                            if (userReactions[momentId].includes(reaction)) {
+                                showToast(`You've already used this reaction`);
+                                return;
+                            }
+                            
                             if (reaction) {
                                 addReaction(momentId, reaction);
+                                // Track this reaction for this user
+                                userReactions[momentId].push(reaction);
+                                localStorage.setItem('userReactions', JSON.stringify(userReactions));
+                                
+                                // Add visual feedback by changing button background
+                                button.classList.add('bg-blue-700');
+                                
                                 showToast(`You reacted with ${reaction}`);
                             }
                         });
@@ -1130,7 +1445,10 @@
                     popupContent.querySelectorAll('.moment-react-add').forEach(button => {
                         button.addEventListener('click', (e) => {
                             e.stopPropagation();
-                            const momentId = button.parentElement.parentElement.parentElement.getAttribute('data-moment-id');
+                            const momentId = e.currentTarget.closest('[data-moment-id]')?.getAttribute('data-moment-id') || 
+                                           e.currentTarget.parentElement.parentElement.querySelector('[data-moment-id]')?.getAttribute('data-moment-id');
+                            
+                            if (!momentId) return;
                             
                             const picker = document.createElement('div');
                             picker.className = 'absolute bg-gray-800 border border-gray-700 rounded-full p-2 shadow-lg flex space-x-1 z-10';
@@ -1138,17 +1456,48 @@
                             picker.style.left = '0';
                             
                             const emojis = ['❤️', '😂', '😮', '😢', '👍', '👎', '🔥', '🎉'];
+                            
+                            // Filter out emojis user has already used for this moment
+                            const usedEmojis = userReactions[momentId] || [];
+                            
                             emojis.forEach(emoji => {
                                 const emojiBtn = document.createElement('button');
                                 emojiBtn.className = 'text-xl hover:scale-125 transition-transform';
+                                if (usedEmojis.includes(emoji)) {
+                                    emojiBtn.classList.add('opacity-50');
+                                    emojiBtn.title = 'Already used';
+                                }
                                 emojiBtn.textContent = emoji;
-                                emojiBtn.addEventListener('click', () => {
-                                    addReaction(momentId, emoji);
-                                    picker.remove();
-                                    showToast(`You reacted with ${emoji}`);
+                                emojiBtn.addEventListener('click', (event) => {
+                                    // Only add reaction if not used already
+                                    if (!usedEmojis.includes(emoji)) {
+                                        addReaction(momentId, emoji);
+                                        
+                                        // Track this reaction
+                                        if (!userReactions[momentId]) {
+                                            userReactions[momentId] = [];
+                                        }
+                                        userReactions[momentId].push(emoji);
+                                        localStorage.setItem('userReactions', JSON.stringify(userReactions));
+                                        
+                                        showToast(`You reacted with ${emoji}`);
+                                    } else {
+                                        showToast(`You've already used this reaction`);
+                                    }
+                                    // Don't remove the picker so user can add multiple different reactions
+                                    event.stopPropagation();
                                 });
                                 picker.appendChild(emojiBtn);
                             });
+                            
+                            // Add a close button
+                            const closeBtn = document.createElement('button');
+                            closeBtn.className = 'text-sm hover:scale-125 transition-transform ml-1 bg-red-800 rounded-full w-5 h-5 flex items-center justify-center';
+                            closeBtn.innerHTML = '×';
+                            closeBtn.addEventListener('click', () => {
+                                picker.remove();
+                            });
+                            picker.appendChild(closeBtn);
                             
                             button.parentElement.style.position = 'relative';
                             button.parentElement.appendChild(picker);
@@ -1169,7 +1518,7 @@
                         button.addEventListener('click', (e) => {
                             e.stopPropagation();
                             const momentId = button.getAttribute('data-moment-id');
-                            const messageElement = popupContent.querySelector('.hidden-message');
+                            const messageElement = popupContent.querySelector('.hidden-message, [class*="text-white"]:not(.hidden-message)');
                             
                             if (revealedMessages[momentId]) {
                                 delete revealedMessages[momentId];
@@ -1233,6 +1582,23 @@
                                 addReply(momentId, message);
                                 input.value = '';
                                 showToast('Reply added');
+                                
+                                // Don't close the popup
+                                setTimeout(() => {
+                                    const repliesContainer = document.getElementById(`replies-${momentId}`);
+                                    if (repliesContainer) {
+                                        const newReply = document.createElement('div');
+                                        newReply.className = 'reply';
+                                        newReply.innerHTML = `
+                                            <div class="flex items-center justify-between">
+                                                <span class="font-medium">${userId}</span>
+                                                <span class="text-gray-400 text-xs">Just now</span>
+                                            </div>
+                                            <div>${message}</div>
+                                        `;
+                                        repliesContainer.appendChild(newReply);
+                                    }
+                                }, 100);
                             }
                         });
                     });
@@ -1241,6 +1607,7 @@
                         input.addEventListener('keypress', (e) => {
                             if (e.key === 'Enter') {
                                 e.stopPropagation();
+                                e.preventDefault();
                                 const momentId = input.getAttribute('data-moment-id');
                                 const message = input.value.trim();
                                 
@@ -1248,6 +1615,23 @@
                                     addReply(momentId, message);
                                     input.value = '';
                                     showToast('Reply added');
+                                    
+                                    // Add reply to UI immediately for better UX
+                                    setTimeout(() => {
+                                        const repliesContainer = document.getElementById(`replies-${momentId}`);
+                                        if (repliesContainer) {
+                                            const newReply = document.createElement('div');
+                                            newReply.className = 'reply';
+                                            newReply.innerHTML = `
+                                                <div class="flex items-center justify-between">
+                                                    <span class="font-medium">${userId}</span>
+                                                    <span class="text-gray-400 text-xs">Just now</span>
+                                                </div>
+                                                <div>${message}</div>
+                                            `;
+                                            repliesContainer.appendChild(newReply);
+                                        }
+                                    }, 100);
                                 }
                             }
                         });
@@ -1256,48 +1640,145 @@
                     markers.push(marker);
                 }
             });
+            
+            // Update the feed with current moments
+            updateFeed();
         }
         
+        // Function to update the feed panel with recent moments
+        function updateFeed() {
+            if (!feedItems) return;
+            
+            feedItems.innerHTML = '';
+            
+            // Sort by timestamp, most recent first
+            const sortedMoments = [...moments].sort((a, b) => b.timestamp - a.timestamp);
+            
+            if (sortedMoments.length === 0) {
+                feedItems.innerHTML = '<p class="text-center text-gray-500 my-4">No moments shared yet</p>';
+                return;
+            }
+            
+            sortedMoments.forEach(moment => {
+                const feedItem = document.createElement('div');
+                feedItem.className = 'feed-item';
+                feedItem.dataset.id = moment.id;
+                feedItem.dataset.lat = moment.coords?.lat;
+                feedItem.dataset.lng = moment.coords?.lng;
+                
+                const isHidden = moment.isHidden && !revealedMessages[moment.id];
+                
+                feedItem.innerHTML = `
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="flex items-center">
+                            <span class="text-2xl mr-2">${moment.mood}</span>
+                            <span class="text-sm text-gray-400">${getTimeAgo(moment.timestamp)}</span>
+                        </div>
+                        ${moment.location ? 
+                            `<span class="text-xs bg-gray-800 px-2 py-1 rounded-full">
+                                <i class="fas fa-map-marker-alt mr-1"></i>${moment.location}
+                             </span>` : ''}
+                    </div>
+                    <div class="mb-2 ${isHidden ? 'hidden-message' : ''} text-sm">
+                        ${isHidden ? 'This message is hidden. Click to reveal.' : moment.message}
+                    </div>
+                    <div class="flex justify-between text-xs text-gray-400">
+                        <div>
+                            ${Object.keys(moment.reactions || {}).length > 0 ? 
+                                `<span><i class="far fa-smile mr-1"></i>${
+                                    Object.entries(moment.reactions).map(([emoji, count]) => `${emoji} ${count}`).join(' ')
+                                }</span>` : 
+                                '<span><i class="far fa-smile mr-1"></i>No reactions</span>'}
+                        </div>
+                        <div>
+                            <i class="far fa-comment-alt mr-1"></i>${moment.replies ? moment.replies.length : 0} replies
+                        </div>
+                    </div>
+                `;
+                
+                // When clicking on a feed item, fly to its location and open its popup
+                feedItem.addEventListener('click', () => {
+                    const lat = parseFloat(feedItem.dataset.lat);
+                    const lng = parseFloat(feedItem.dataset.lng);
+                    
+                    if (!isNaN(lat) && !isNaN(lng)) {
+                        map.flyTo([lat, lng], 14);
+                        
+                        // Find the marker and open its popup
+                        const marker = markers.find(m => {
+                            const latLng = m.getLatLng();
+                            return Math.abs(latLng.lat - lat) < 0.0001 && Math.abs(latLng.lng - lng) < 0.0001;
+                        });
+                        
+                        if (marker) {
+                            setTimeout(() => {
+                                marker.openPopup();
+                            }, 1000); // Wait for the map to fly to location
+                        }
+                        
+                        // On mobile, close the feed panel after selection
+                        if (window.innerWidth < 768) {
+                            toggleFeed();
+                        }
+                    }
+                });
+                
+                feedItems.appendChild(feedItem);
+            });
+        }
+        
+        // Toggle feed visibility
+        function toggleFeed() {
+            isFeedOpen = !isFeedOpen;
+            
+            if (isFeedOpen) {
+                feedPanel.classList.add('active');
+                feedToggle.innerHTML = '<i class="fas fa-times"></i>';
+                // On larger screens, adjust map container
+                if (window.innerWidth >= 768) {
+                    mapContainer.classList.add('feed-active');
+                    if (floatingForm) {
+                        floatingForm.classList.add('feed-active');
+                    }
+                }
+            } else {
+                feedPanel.classList.remove('active');
+                feedToggle.innerHTML = '<i class="fas fa-list"></i>';
+                mapContainer.classList.remove('feed-active');
+                if (floatingForm) {
+                    floatingForm.classList.remove('feed-active');
+                }
+            }
+            
+            // Need to update the map size when changing container dimensions
+            setTimeout(() => {
+                map.invalidateSize();
+            }, 300);
+        }
+        
+        // Add feed toggle event listener
+        if (feedToggle) {
+            feedToggle.addEventListener('click', toggleFeed);
+        }
+        
+        // Fix for the toggle form button to ensure it shows/hides the form properly
         if (toggleFormButton && closeFormButton && floatingForm) {
             toggleFormButton.addEventListener('click', () => {
+                isFormOpen = !isFormOpen;
+                
                 if (isFormOpen) {
-                    floatingForm.classList.add('hidden');
-                    toggleFormButton.innerHTML = '<i class="fas fa-plus"></i>';
-                } else {
                     floatingForm.classList.remove('hidden');
                     toggleFormButton.innerHTML = '<i class="fas fa-minus"></i>';
+                } else {
+                    floatingForm.classList.add('hidden');
+                    toggleFormButton.innerHTML = '<i class="fas fa-plus"></i>';
                 }
-                isFormOpen = !isFormOpen;
             });
             
             closeFormButton.addEventListener('click', () => {
                 floatingForm.classList.add('hidden');
                 toggleFormButton.innerHTML = '<i class="fas fa-plus"></i>';
                 isFormOpen = false;
-            });
-        }
-        
-        if (zoomInButton) {
-            zoomInButton.addEventListener('click', () => {
-                map.zoomIn();
-            });
-        }
-        
-        if (zoomOutButton) {
-            zoomOutButton.addEventListener('click', () => {
-                map.zoomOut();
-            });
-        }
-        
-        if (locateMeButton) {
-            locateMeButton.addEventListener('click', () => {
-                if (userGeoLocation) {
-                    map.flyTo([userGeoLocation.lat, userGeoLocation.lng], 13);
-                } else if (userLocation?.coords) {
-                    map.flyTo([userLocation.coords.lat, userLocation.coords.lng], 10);
-                } else {
-                    showToast("Couldn't determine your location");
-                }
             });
         }
         
@@ -1499,6 +1980,8 @@
                 
                 moments = recentMoments;
                 updateMapMarkers();
+                // Also update the feed whenever moments change
+                updateFeed();
             });
         }
         
